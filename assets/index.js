@@ -60,10 +60,19 @@
 
 (() => {
     const loaded = () => {
+        // const pattern = /\?(&?word=[A-Z]*)?(&?pattern=.{1})?(&?color=[A-Z,0-9()]{3,})?(&?bg=[A-Z,0-9()]{3,})?/
         const covidize = window.covidize
-        console.log(window.location.search.substring())
+        const query = window.location.search
+        const urlParams = new URLSearchParams(query);
+        const word = urlParams.get("word") || "covidizer"
+        const pattern = urlParams.get("pattern") || "*"
+        const color = urlParams.get("color") || "white"
+        const bg = urlParams.get("bg") || "black"
         const result = document.getElementById("covidized-word")
-        result.innerText = covidize()
+        result.style.color = color
+        result.style.backgroundColor = bg
+        result.innerText = covidize(word, pattern)
+        
     }
     document.addEventListener("DOMContentLoaded", loaded, false)
 })();
